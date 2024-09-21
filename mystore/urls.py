@@ -16,7 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from api import views
+from rest_framework.routers import DefaultRouter
 
+router = DefaultRouter()  #this is creating a object
+router.register('api/products',views.productViewsetView,basename='products') #viewset verumbo automatic url create cheyyan
+router.register("users",views.UserView,basename='user')
+router.register('carts',views.Cartview,basename='carts')
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+    path('products',views.productView.as_view()),
+    path('products/<int:id>/',views.productdetailView.as_view()),   #apiview verumbo
+    # path('carts/<int:id>/',views.Cartview.as_view())
+    path('reviews/<int:id>/',views.ReviewView.as_view()),
+]+router.urls
